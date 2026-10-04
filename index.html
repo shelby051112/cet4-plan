@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>刘心洋 · 四级备考学期计划中心</title>
+<style>
+:root{--bg:#0b1220;--panel:#111a2e;--card:#16213c;--line:#1d2c4d;--text:#dbe7ff;--muted:#8fa3c4;--accent:#60a5fa;--accent2:#34d399;--ok:#34d399;--no:#f87171;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:14px 14px 40px}
+header{background:linear-gradient(135deg,#13233f,#0f1a30);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:14px}
+h1{font-size:20px;font-weight:800;letter-spacing:.5px}
+.sub{font-size:12.5px;color:var(--muted);margin-top:4px}
+.weekbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+.bigbtn{border:none;border-radius:10px;padding:10px 18px;font-size:14.5px;font-weight:700;cursor:pointer}
+.bigbtn.main{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff}
+.bigbtn.ghost{background:#1c2a4d;color:var(--text);border:1px solid var(--line)}
+.bigbtn:hover{filter:brightness(1.12)}
+select{background:#1c2a4d;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:14px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;background:#15223d;border:1px solid var(--line);color:var(--muted);border-radius:99px;padding:8px 16px;font-size:13.5px;cursor:pointer;font-weight:600}
+.tab.on{background:#2563eb;color:#fff;border-color:#2563eb}
+.pane{display:none;animation:fade .25s}
+.pane.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.sec{font-size:16px;font-weight:800;margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:99px;background:var(--accent);display:inline-block}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.hint{background:#0e1b33;border:1px solid #1b2b50;border-radius:10px;padding:10px 14px;font-size:12.5px;color:var(--muted);margin-bottom:12px;line-height:1.8}
+.weekmeta{background:linear-gradient(135deg,#0d2b1c,#0b1f16);border:1px solid #14532d;border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:13.5px}
+.weekmeta b{color:#6ee7b7}
+.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px}
+.day{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.day.holiday{border-color:#7c2d12;background:linear-gradient(160deg,#1f1505,#191307)}
+.day.examday{border-color:#9f1239;background:linear-gradient(160deg,#1f0a14,#170a11)}
+.dhead{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:#1a2440;border-bottom:1px solid var(--line)}
+.dhead .dname{font-weight:800;font-size:14.5px}
+.dhead .ddate{font-size:11.5px;color:var(--muted)}
+.blk{display:flex;align-items:center;gap:9px;padding:8px 13px;border-bottom:1px dashed #1b2a4a;font-size:13px}
+.blk:last-child{border-bottom:none}
+.btime{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#7dd3fc;flex:0 0 92px}
+.btxt{flex:1;min-width:0}
+.bcat{font-size:10px;padding:1px 7px;border-radius:99px;flex:0 0 auto}
+.btn{background:#1c2a4d;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:8px 14px;font-size:13.5px;cursor:pointer;font-weight:600}
+.btn.pri{background:#2563eb;color:#fff;border-color:#2563eb}
+.btn:hover{filter:brightness(1.15)}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+table.tbl{width:100%;border-collapse:collapse;font-size:12.8px}
+table.tbl th{background:#1a2a4d;padding:8px 10px;text-align:left;font-size:12px;color:#9db8e4}
+table.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.ck{width:19px;height:19px;accent-color:#2563eb;cursor:pointer;flex:0 0 auto}
+textarea{width:100%;min-height:220px;background:#0d1830;border:1px solid var(--line);border-radius:10px;color:var(--text);padding:12px;font-size:13px;line-height:1.8;font-family:inherit}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:26px;background:#1d4ed8;color:#fff;padding:11px 20px;border-radius:99px;font-size:13.5px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.45);z-index:99;animation:pop .3s;max-width:90vw;text-align:center}
+@keyframes pop{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1}}
+.todo-row{display:flex;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.todo-row input.f{background:#0d1830;border:1px solid var(--line);border-radius:8px;color:var(--text);padding:8px 10px;font-size:13.5px}
+.todo-row .d{width:86px}.todo-row .t{flex:1;min-width:180px}.todo-row .n{flex:1;min-width:140px}
+.op{background:none;border:none;cursor:pointer;font-size:15px;padding:4px}
+.chip{display:inline-block;background:#12233b;color:#93c5fd;border-radius:99px;padding:3px 11px;font-size:11.5px;margin:2px 4px 2px 0}
+.progress{height:8px;background:#0d1830;border-radius:99px;overflow:hidden;margin:6px 0 12px}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,#2563eb,#34d399);border-radius:99px}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px}
+.stat .s{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat .v{font-size:22px;font-weight:800;color:var(--accent2)}
+.stat .k{font-size:11.5px;color:var(--muted)}
+footer{margin-top:26px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.9}
+.banner{background:#3b1d0e;border:1px solid #9a3412;color:#fdba74;border-radius:12px;padding:12px 16px;font-size:13px;margin-bottom:12px;line-height:1.7}
+@media(max-width:720px){.days{grid-template-columns:1fr}.btime{flex-basis:78px;font-size:10.5px}.blk{padding:9px 10px;font-size:14px}.ck{width:22px;height:22px}.bigbtn,.btn{min-height:44px}.todo-row .d{width:100%}.todo-row .t,.todo-row .n{min-width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>🎓 刘心洋 · 四级备考学期计划中心</h1>
+  <div class="sub" id="subTitle"></div>
+  <div class="weekbar">
+    <select id="weekSel" onchange="jumpWeek(this.value)"></select>
+    <button class="bigbtn main" onclick="refreshWeek()">🔄 刷新 · 开始新的一周</button>
+    <span id="cdBadge" style="font-size:12.5px;color:#fbbf24;font-weight:700"></span>
+  </div>
+  <div id="syncHint"></div>
+</header>
+
+<div class="tabs">
+  <div class="tab on" data-p="plan" onclick="showTab('plan',this)">📋 本周计划</div>
+  <div class="tab" data-p="tasks" onclick="showTab('tasks',this)">✍️ 每周任务</div>
+  <div class="tab" data-p="report" onclick="showTab('report',this)">📊 周报告&反馈</div>
+  <div class="tab" data-p="remind" onclick="showTab('remind',this)">⏰ 提醒</div>
+  <div class="tab" data-p="res" onclick="showTab('res',this)">📚 学习资源</div>
+  <div class="tab" data-p="data" onclick="showTab('data',this)">💾 数据管理</div>
+</div>
+
+<section class="pane on" id="pane-plan">
+  <div class="weekmeta" id="weekMeta"></div>
+  <div class="days" id="daysBox"></div>
+</section>
+
+<section class="pane" id="pane-tasks">
+  <h2 class="sec"><span class="dot"></span>我的每周任务（自己写）</h2>
+  <div class="hint">✍️ 完全由你自己填写：写下本周要完成的大事（作业截止、报名、约人、缴费…）。点 <b>⏰</b> 可把任务加入提醒。刷新开新周后，旧周任务自动归档到周报告。</div>
+  <div class="row" style="margin-top:0">
+    <div class="card" style="flex:1;min-width:280px">
+      <div id="todoEditor"></div>
+      <button class="btn ghost" onclick="addTodo()">＋ 添加一条任务（当前周）</button>
+    </div>
+  </div>
+</section>
+
+<section class="pane" id="pane-report">
+  <h2 class="sec"><span class="dot"></span>本周表现</h2>
+  <div class="card">
+    <div class="stat" id="statBox"></div>
+    <div class="progress"><i id="progBar" style="width:0%"></i></div>
+    <div id="dayStats"></div>
+  </div>
+  <div class="card">
+    <b style="color:var(--accent2)">📈 智能分析与优化建议</b>
+    <ul id="analysisBox" style="margin:10px 0 0 18px;font-size:13px;line-height:2"></ul>
+  </div>
+  <div class="card">
+    <b style="color:var(--accent2)">🗂 历史周归档</b>
+    <div id="archiveBox" style="margin-top:10px"></div>
+  </div>
+  <div class="card">
+    <b style="color:var(--accent2)">📮 每周反馈（复制给 WorkBuddy 生成下周调整）</b>
+    <div class="row"><button class="btn pri" onclick="genFeedback()">生成反馈文本</button><button class="btn" onclick="copyFeedback()">📋 复制</button></div>
+    <textarea id="fbText" placeholder="点「生成反馈文本」…"></textarea>
+  </div>
+</section>
+
+<section class="pane" id="pane-remind">
+  <h2 class="sec"><span class="dot"></span>⏰ 提醒</h2>
+  <div class="hint">开启浏览器通知并保持页面开着（可挂后台），到点弹窗。<b>手机端请用下方「导出到手机日历」</b>——系统级提醒，不依赖网页。每周日晚另有 WorkBuddy 定时提醒。</div>
+  <div class="card">
+    <div class="row" style="margin-top:0">
+      <button class="btn pri" onclick="enableNotif()">🔔 开启浏览器通知</button>
+      <button class="btn" onclick="exportICS()">📲 导出到手机日历(.ics)</button>
+      <span id="notifState" style="font-size:12.5px;color:var(--muted);align-self:center"></span>
+    </div>
+    <div id="remBox"></div>
+  </div>
+</section>
+
+<section class="pane" id="pane-res">
+  <h2 class="sec"><span class="dot"></span>📚 四级备考学习资源</h2>
+  <div id="resBox"></div>
+</section>
+
+<section class="pane" id="pane-data">
+  <h2 class="sec"><span class="dot"></span>💾 数据管理</h2>
+  <div class="hint">🔄 <b>刷新按钮说明</b>：点击后把<b>当前周的勾选数据归档</b>（保存进周报告历史），然后切换到新的一周——日期自动对应、单双周自动判断、节假日自动标出。每周日晚复盘后点它即可。本设备与手机数据各自独立，跨设备请用导出/导入。</div>
+  <div class="row">
+    <button class="btn" onclick="exportData()">📤 导出备份(JSON)</button>
+    <button class="btn" onclick="importData()">📥 导入备份</button>
+    <button class="btn ghost" onclick="clearWeek()">🧽 只清空本周勾选</button>
+    <button class="btn ghost" onclick="resetData()">⚠️ 清空全部记录</button>
+  </div>
+</section>
+
+<footer id="foot"></footer>
+</div>
+<script>
+const CFG = {"student": "刘心洋", "school": "上海中侨职业技术大学", "term": "2026-2027学年第一学期（26视觉本科2）", "cet4Date": "2026-12-12", "startPointer": 3, "periods": {"1-2": ["08:35", "09:55"], "3-4": ["10:10", "11:30"], "5-6": ["12:35", "13:55"], "7-8": ["14:10", "15:30"], "9-10": ["15:45", "17:05"], "11-12": ["18:15", "19:35"]}, "courses": [{"name": "心理健康教育", "day": 1, "period": "1-2", "wk": [3, 18], "room": "42-211", "teacher": "陈巧英"}, {"name": "职业生涯规划与就业指导", "day": 1, "period": "3-4", "wk": [4, 18], "parity": "even", "room": "42-212", "teacher": "李枝霖"}, {"name": "习近平新时代中国特色社会主义思想概论", "day": 1, "period": "9-10", "wk": [3, 18], "room": "10-405", "teacher": "工农"}, {"name": "习近平新时代中国特色社会主义思想概论", "day": 2, "period": "1-2", "wk": [3, 17], "parity": "odd", "room": "42-516", "teacher": "工农"}, {"name": "思想道德与法治", "day": 2, "period": "1-2", "wk": [4, 18], "parity": "even", "room": "10-501", "teacher": "李英平"}, {"name": "形势与政策", "day": 2, "period": "3-4", "wk": [5, 8], "room": "42-316", "teacher": "李英平"}, {"name": "数字图像技术", "day": 2, "period": "5-6", "wk": [3, 18], "room": "35-322", "teacher": "梁文静"}, {"name": "大学英语1", "day": 2, "period": "7-8", "wk": [3, 18], "room": "10-503", "teacher": "叶怡"}, {"name": "思想道德与法治", "day": 3, "period": "1-2", "wk": [3, 18], "room": "10-501", "teacher": "李英平"}, {"name": "大学英语1", "day": 3, "period": "3-4", "wk": [3, 18], "room": "10-503", "teacher": "叶怡"}, {"name": "视觉设计基础", "day": 3, "period": "9-10", "wk": [3, 18], "room": "5-406", "teacher": "戎晟"}, {"name": "视觉设计基础", "day": 3, "period": "11-12", "wk": [3, 18], "room": "5-408", "teacher": "贺晓舟"}, {"name": "体育与健康（游泳）", "day": 4, "period": "3-4", "wk": [1, 16], "room": "游泳馆3", "teacher": "骆兵"}, {"name": "大学信息技术", "day": 5, "period": "3-4", "wk": [4, 18], "parity": "even", "room": "35-303", "teacher": "时艺玮"}, {"name": "大学信息技术（连上4节·含上机）", "day": 5, "period": "3-6", "wk": [3, 17], "parity": "odd", "room": "35-303", "teacher": "时艺玮"}], "holidays": {"2026-10-01": "国庆节", "2026-10-02": "国庆节", "2026-10-03": "国庆节", "2026-10-04": "国庆节", "2026-10-05": "国庆节", "2026-10-06": "国庆节", "2026-10-07": "国庆节", "2027-01-01": "元旦", "2027-01-02": "元旦", "2027-01-03": "元旦"}, "weekNotes": {"3": "国庆周：9/28-30 照常上课，10/1-7 法定节假日休息。本学期第3周。", "4": "10/1-7 假期延续（10/5-7休息），10/8（周四）恢复上课。10/10（周六）若学校安排调休补课，以通知为准。", "8": "形势与政策最后一周（第5-8周）。10/26-11/1。", "13": "🎯 四级考试周！考试预计 12/12（周六）9:00-11:20，以准考证为准。本周减量复习、调整状态。", "16": "期末复习周。12/28-1/3，其中 1/1-3 元旦放假。", "17": "校外实习1：认识实习（李勇带队，共2周，1/4-1/10）。晚上英语轻量保持。", "18": "校外实习最后一周（1/11-1/17）。学期结束。"}, "resources": [["四级真题", "历年四级真题PDF（华研/星火），网站每周日上午全真模拟用", "https://www.exam8.com/english/CET4/"], ["单词", "百词斩/墨墨背单词（每天碎片+晚间的固定单词块）", "https://www.baicizhan.com"], ["单词", "不背单词（真题词频模式，适合冲刺）", "https://www.bbdc.cn"], ["听力", "每日英语听力（真题听力+泛听，晨读磨耳朵首选）", "https://dict.eudic.net/ting"], ["听力", "TED（泛听+跟读，周末轻松学用）", "https://www.ted.com"], ["阅读", "China Daily / BBC News（课外泛读，积累翻译素材）", "https://www.chinadaily.com.cn"], ["写作翻译", "扇贝四六级写作模板 + 范文精读", "https://www.shanbay.com"], ["综合", "中国教育考试网·四六级报名与成绩（官方）", "https://cet.neea.edu.cn"]], "reminders": [{"id": "gym", "when": "周一/二/五/六/日 19:30", "text": "🏋️ 健身出发（19:30-21:00，周三周四休息）", "days": [1, 2, 5, 6, 0], "times": ["19:30"]}, {"id": "study", "when": "每天 21:00", "text": "📚 晚间学习块开始（21:00-23:00）", "days": null, "times": ["21:00"]}, {"id": "review", "when": "周日 21:00", "text": "📊 周复盘：勾选✓/✗→生成反馈→点刷新开新一周", "days": [0], "times": ["21:00"]}, {"id": "exam", "when": "12/11 21:00", "text": "🎯 明天四级考试！检查准考证·身份证·耳机·文具，早睡", "days": null, "times": []}]};
+/* ---------- state ---------- */
+const LSKEY = "liuxinyang_cet4_plan_v1";
+let S = load();
+function load(){ try{ return JSON.parse(localStorage.getItem(LSKEY)) || fresh(); }catch(e){ return fresh(); } }
+function fresh(){ return {pointer: CFG.startPointer, status:{}, todos:[], rem:{}, fired:{}, archive:{}, customRem:[]}; }
+function save(){ localStorage.setItem(LSKEY, JSON.stringify(S)); }
+S.status = S.status||{}; S.todos = S.todos||[]; S.rem = S.rem||{}; S.fired = S.fired||{}; S.archive = S.archive||{}; S.customRem = S.customRem||[];
+
+/* ---------- week/date helpers ---------- */
+const SEM_MON = new Date(2026,8,14); // 第1周周一 = 2026-09-14
+function weekMonday(w){ const d=new Date(SEM_MON); d.setDate(d.getDate()+(w-1)*7); return d; }
+function todayWeek(){ const t=new Date(); t.setHours(0,0,0,0); const diff=Math.round((t-SEM_MON)/(7*864e5)); return diff<0?1:Math.min(18,Math.floor(diff/7)+1); }
+function dkey(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function isHoliday(d){ return CFG.holidays[dkey(d)] || null; }
+function wd(d){ return ["日","一","二","三","四","五","六"][d.getDay()]; }
+function coursesFor(w, day){ return CFG.courses.filter(c=>c.day===day && w>=c.wk[0] && w<=c.wk[1] && (!c.parity || (c.parity==="odd"? w%2===1 : w%2===0))); }
+function phase(w){ if(w<=12) return "cet4"; if(w===13) return "examweek"; if(w<=16) return "final"; return "intern"; }
+const PHASE_NAME = {cet4:"四级冲刺期", examweek:"四级考试周！", final:"考后·期末复习期", intern:"校外实习期"};
+
+/* study label by phase */
+function sl(w, txt){ const p=phase(w); if(p==="cet4"||p==="examweek") return "四级·"+txt; if(p==="final") return "英语保持+期末复习"; return "自由·"+txt; }
+
+/* ---------- build day blocks ---------- */
+const CAT = {fixed:{n:"作息",c:"#94a3b8",bg:"#1e293b"}, eat:{n:"餐食",c:"#fbbf24",bg:"#291f05"}, course:{n:"上课",c:"#f87171",bg:"#2a1015"}, study:{n:"学习",c:"#60a5fa",bg:"#0d1f42"}, gym:{n:"健身",c:"#818cf8",bg:"#1b1b3a"}, free:{n:"自己安排",c:"#34d399",bg:"#0d2b1c"}, exam:{n:"考试",c:"#f472b6",bg:"#2b0b1c"}, intern:{n:"实习",c:"#fb923c",bg:"#2b1706"}, task:{n:"周任务",c:"#22d3ee",bg:"#082b30"}};
+function catTag(k){ const c=CAT[k]||CAT.free; return `<span class="bcat" style="color:${c.c};background:${c.bg}">${c.n}</span>`; }
+
+function buildDay(w, date){
+  const day = date.getDay(); const d0 = day===0?7:day;
+  const hol = isHoliday(date);
+  const yy = date.getFullYear(), mm = date.getMonth()+1, dd = date.getDate();
+  const label = "周"+wd(date)+" · "+mm+"/"+dd;
+  const ph = phase(w);
+  let blocks = [];
+  const B=(t1,t2,txt,cat)=>blocks.push({t1,t2,txt,cat});
+  const courses = coursesFor(w, d0);
+  const find = p => courses.find(c=>c.period===p);
+  const cinfo = c => `${c.name}｜${c.room}｜${c.teacher}`;
+  const P = CFG.periods;
+
+  if(hol){ // 法定节假日
+    B("08:00","08:30","起床·洗漱（假期不设闹钟）","fixed");
+    B("08:30","09:00","早饭","eat");
+    B("09:30","10:00","单词打卡30min（可选，保持手感）","study");
+    B("10:00","12:00","自由安排（出去玩/休息）","free");
+    B("12:00","12:45","午饭","eat");
+    B("14:00","15:00","四级轻松学（可选：泛听TED/美剧跟读）","study");
+    B("15:00","18:00","自由安排","free");
+    B("18:00","19:00","晚饭","eat");
+    if(d0===6||d0===7){ B("19:30","21:00","健身（可选，假期看状态）","gym"); }
+    B("21:00","23:00","自由安排","free");
+    B("23:30","00:00","洗漱·就寝（0:00睡）","fixed");
+    return {label, holiday:hol, blocks};
+  }
+  if(ph==="intern" && d0<=5){ // 17-18周实习
+    B("07:00","07:15","起床洗漱","fixed");
+    B("07:15","08:00","早饭","eat");
+    B("08:00","08:30","出门准备·通勤","fixed");
+    B("08:30","17:00","校外实习：认识实习（全天，李勇带队；午休按现场安排）","intern");
+    B("17:00","18:00","回程·休整","free");
+    B("18:00","19:00","晚饭","eat");
+    B("19:30","21:00", d0===1||d0===2||d0===5?"健身":"自由安排","gym");
+    B("21:00","22:30","英语保持·泛听+单词（考后轻量）","study");
+    B("22:30","23:45","自由安排","free");
+    B("23:45","00:00","洗漱就寝","fixed");
+    return {label, blocks};
+  }
+  if(d0===6){ // Saturday
+    if(w===13){ // 12/12 四级考试
+      B("07:00","07:15","起床洗漱","fixed");
+      B("07:15","08:00","早饭（清淡，别吃太饱）","eat");
+      B("08:00","08:30","检查：准考证·身份证·学生证·耳机(满电)·2B铅笔·黑色签字笔","exam");
+      B("08:30","09:00","出发去考场（提前到，熟悉路线）","exam");
+      B("09:00","11:20","四级笔试（写作30min+听力25min+阅读40min+翻译30min）","exam");
+      B("11:30","12:30","午饭·放松，不对答案","eat");
+      B("14:00","17:00","自由安排（考完好好休息）","free");
+      B("18:00","19:00","晚饭","eat");
+      B("19:30","21:00","健身（考完释放一下）","gym");
+      B("21:00","23:00","自由安排","free");
+      B("23:30","00:00","洗漱就寝","fixed");
+      return {label, examday:true, blocks};
+    }
+    B("07:00","07:15","起床洗漱","fixed");
+    B("07:15","08:00","早饭","eat");
+    B("08:00","09:30","听力专项（真题精听+跟读）","study");
+    B("09:40","11:30","阅读专项（真题2篇精读+生词）","study");
+    B("11:30","12:00","自由安排","free");
+    B("12:00","12:45","午饭","eat");
+    B("12:45","14:00","午休·自由安排","free");
+    B("14:00","15:30", w<=12?"写作专项（背模板+练1篇）":"期末复习·专业课程","study");
+    B("15:30","18:00","自由安排（自己安排）","free");
+    B("18:00","19:00","晚饭","eat");
+    B("19:30","21:00","健身","gym");
+    B("21:00","22:30","单词复盘+本周错题回顾","study");
+    B("22:30","23:45","自由安排","free");
+    B("23:45","00:00","洗漱就寝","fixed");
+    return {label, blocks};
+  }
+  if(d0===7){ // Sunday
+    B("07:00","07:15","起床洗漱","fixed");
+    B("07:15","08:00","早饭","eat");
+    if(w<=12){ B("08:30","11:00","四级真题套卷·全真模拟（严格计时）","study"); B("11:00","12:00","对答案+错题标记","study"); }
+    else { B("08:30","11:00","期末复习·本周课程内容","study"); B("11:00","12:00","错题/难点整理","study"); }
+    B("12:00","12:45","午饭","eat");
+    B("12:45","14:00","午休·自由安排","free");
+    B("14:00","15:30","弱项补强（按本周错题最多的题型）","study");
+    B("15:30","17:30","自由安排（自己安排）","free");
+    B("18:00","19:00","晚饭","eat");
+    B("19:30","21:00","健身","gym");
+    B("21:00","21:30","周复盘：网站勾选✓/✗ + 生成反馈","task");
+    B("21:30","22:30","下周计划：单词量+预习+任务栏","task");
+    B("22:30","23:45","自由安排","free");
+    B("23:45","00:00","洗漱就寝","fixed");
+    return {label, blocks};
+  }
+  /* ---- weekdays ---- */
+  B("07:00","07:15","起床洗漱","fixed");
+  B("07:15","08:00","早饭","eat");
+  const c12 = find("1-2"), c34 = find("3-4"), c56 = find("5-6"), c78 = find("7-8"), c910 = find("9-10"), c1112 = find("11-12");
+  if(c12){ B("08:00","08:35","晨读·听力磨耳朵（课前）","study"); B(P["1-2"][0],P["1-2"][1],cinfo(c12),"course"); }
+  else { B("08:00","10:00","大块学习："+sl(w,"听力精听2h"),"study"); }
+  if(d0===5){ // Friday 特殊：单周3-6节 / 双周3-4节
+    const c = c34 || find("3-6");
+    if(c){ const pp = P[c.period] || ["10:10","13:55"];
+      B(pp[0],pp[1],cinfo(c)+(c.period==="3-6"?"（连上4节，含上机）":""),"course");
+      if(c.period==="3-6") blocks[blocks.length-1].lunchNote = "11:35-12:30 课间吃午饭";
+    }
+  } else if(c34){ B(P["3-4"][0],P["3-4"][1],cinfo(c34),"course"); }
+  else if(d0!==4){ B("10:10","11:30","学习："+sl(w,"阅读/词汇"),"study"); }
+  if(d0===4){ // Thursday 游泳
+    const c = c34;
+    if(c) B(P["3-4"][0],P["3-4"][1],cinfo(c)+"（记得带泳衣泳帽毛巾）","course");
+  }
+  // midday
+  if(d0===2 && c56){ // Tue 5-6节数字图像技术
+    B("11:30","12:00","自由安排","free");
+    B("12:00","12:30","午饭（今天12:35有课，提前吃）","eat");
+    B(P["5-6"][0],P["5-6"][1],cinfo(c56),"course");
+  } else if(d0===5 && find("3-6")){ /* Friday odd: lunch inside course gap, handled above */ }
+  else {
+    B("11:30","12:00","自由安排","free");
+    B("12:00","12:45","午饭","eat");
+    B("12:45","14:00","午休·自由安排","free");
+  }
+  // afternoon
+  if(d0===2 && c78){ B(P["7-8"][0],P["7-8"][1],cinfo(c78),"course"); B("15:40","18:00","学习："+sl(w,"写作/翻译")+"（中间可歇）","study"); }
+  else if(d0===3){ B("14:00","15:30","学习："+sl(w,"阅读专项"),"study"); }
+  else if(d0===4){ B("14:00","15:30","学习："+sl(w,"翻译专项"),"study"); }
+  else if(d0===5){ if(!find("3-6")){ B("14:00","15:30","学习："+sl(w,"阅读"),"study"); } else { B("14:05","15:30","自由安排（今天上完4节课）","free"); } }
+  else { B("13:40","14:30","学习："+sl(w,"单词+语法"),"study"); B("14:30","15:45","自由安排（自己安排）","free"); }
+  // late afternoon / evening courses
+  if(d0===1 && c910){ B(P["9-10"][0],P["9-10"][1],cinfo(c910),"course"); B("17:05","18:00","自由安排·洗换","free"); }
+  if(d0===3 && c910 && c1112){
+    B(P["9-10"][0],P["9-10"][1],cinfo(c910),"course");
+    B("17:10","18:10","晚饭（今晚连上，提前吃）","eat");
+    B(P["11-12"][0],P["11-12"][1],cinfo(c1112),"course");
+    B("19:45","21:30","学习："+sl(w,"写作+单词"),"study");
+    B("21:30","23:30","自由安排","free");
+    B("23:30","00:00","洗漱就寝（今天无健身）","fixed");
+    return {label, blocks};
+  }
+  // generic evening
+  const gymDay = (d0===1||d0===2||d0===5);
+  if(d0===4||d0===5){ B("15:35","18:00","自由安排（自己安排）","free"); }
+  B("18:00","19:00","晚饭","eat");
+  if(gymDay){ B("19:30","21:00","健身（力量/有氧1.5h）","gym"); }
+  else { B("19:30","21:00","自由安排（今天休息日）","free"); }
+  B("21:00","23:00","晚间学习："+sl(w, d0===1?"听力精听+错题":d0===2?"真题分项训练":d0===4?"阅读真题+错题":"词汇+复盘"),"study");
+  B("23:00","23:45","自由安排","free");
+  B("23:45","00:00","洗漱就寝（0:00睡）","fixed");
+  return {label, blocks};
+}
+
+/* ---------- render ---------- */
+let WEEK = null;
+function renderWeek(){
+  const w = S.pointer;
+  const mon = weekMonday(w);
+  const days = [];
+  for(let i=0;i<7;i++){ const d=new Date(mon); d.setDate(d.getDate()+i); days.push(buildDay(w,d)); }
+  WEEK = {w, mon, days};
+  // week meta
+  const sun = new Date(mon); sun.setDate(sun.getDate()+6);
+  const parity = w%2===1?"单周":"双周";
+  const cs = [];
+  for(let d=1;d<=5;d++){
+    const dd = new Date(mon); dd.setDate(dd.getDate()+(d-1));
+    if(isHoliday(dd)) continue; // 假日当天课程自动暂停
+    coursesFor(w,d).forEach(c=>{
+      const pw = c.parity? "("+(c.parity==="odd"?"单":"双")+"周)" : "";
+      cs.push("周"+"一二三四五"[d-1]+" "+c.name+pw);
+    });
+  }
+  const holList = []; for(let i=0;i<7;i++){ const d=new Date(mon); d.setDate(d.getDate()+i); const h=isHoliday(d); if(h) holList.push((d.getMonth()+1)+"/"+d.getDate()+" "+h); }
+  const note = CFG.weekNotes[String(w)] || "";
+  document.getElementById("weekMeta").innerHTML =
+    `<b>第 ${w} 周</b>（${mon.getMonth()+1}/${mon.getDate()} ~ ${sun.getMonth()+1}/${sun.getDate()}）· <b>${parity}</b> · ${PHASE_NAME[phase(w)]}`+
+    (holList.length?`<br>🎉 本周法定节假日：<b>${holList.join("、")}</b>（休息日，学习任务全部可选）`:"")+
+    (cs.length?`<br>📚 本周有课：${cs.join("；")}`:"<br>📚 本周无课")+
+    (note?`<br>📌 ${note}`:"");
+  // days
+  const box = document.getElementById("daysBox");
+  box.innerHTML = days.map((day,di)=>{
+    const cls = day.holiday?"holiday":(day.examday?"examday":"");
+    const tag = day.holiday?`<span style="font-size:11px;color:#fdba74">🎉 ${day.holiday}·休息</span>`:(day.examday?`<span style="font-size:11px;color:#f472b6">🎯 四级考试日</span>`:"");
+    const rows = day.blocks.map((b,bi)=>{
+      const k = "w"+w+"-"+di+"-"+bi;
+      const st = S.status[k];
+      const mark = st==="done"?"✅":(st==="miss"?"❌":"");
+      return `<div class="blk"><span class="btime">${b.t1}<br>${b.t2}</span>
+        <span class="btxt">${b.txt}${b.lunchNote?`<br><i style="color:#fbbf24;font-size:11px">${b.lunchNote}</i>`:""}</span>
+        ${catTag(b.cat)}
+        <button class="op" title="完成" onclick="mark('${k}','done')" style="color:${st==='done'?'#34d399':'#4b608a'}">✔</button>
+        <button class="op" title="没做到" onclick="mark('${k}','miss')" style="color:${st==='miss'?'#f87171':'#4b608a'}">✘</button></div>`;
+    }).join("");
+    return `<div class="day ${cls}"><div class="dhead"><span class="dname">${day.label}</span><span class="ddate">${tag}</span></div>${rows}</div>`;
+  }).join("");
+  renderStats(); renderTodos();
+}
+function mark(k,v){ S.status[k] = S.status[k]===v? "":v; save(); renderWeek(); }
+
+/* ---------- week selector & refresh ---------- */
+function renderSel(){
+  const sel = document.getElementById("weekSel");
+  const tw = todayWeek();
+  sel.innerHTML = "";
+  for(let w=CFG.startPointer; w<=18; w++){
+    const mon = weekMonday(w); const sun = new Date(mon); sun.setDate(sun.getDate()+6);
+    const o = document.createElement("option");
+    o.value = w; o.textContent = `第${w}周（${mon.getMonth()+1}/${mon.getDate()}-${sun.getMonth()+1}/${sun.getDate()} ${w%2===1?"单":"双"}周）${w===tw?" ←本周":""}`;
+    if(w===S.pointer) o.selected = true;
+    sel.appendChild(o);
+  }
+  const tw2 = todayWeek();
+  const t = new Date();
+  document.getElementById("syncHint").innerHTML = S.pointer < tw2
+    ? `<div class="banner" style="margin-top:12px">📅 今天是 ${t.getMonth()+1}/${t.getDate()}（第${tw2}周），当前还停在第${S.pointer}周。完成本周勾选后，点 <b>🔄 刷新·开始新的一周</b> 自动切换过去。</div>`:"";
+  // countdown
+  const days = Math.ceil((new Date(CFG.cet4Date) - new Date(t.getFullYear(),t.getMonth(),t.getDate()))/864e5);
+  document.getElementById("cdBadge").textContent = days>0? `⏳ 距四级考试(${CFG.cet4Date.slice(5)}) 还有 ${days} 天` : (days===0?"🎯 今天四级考试！":"四级已考完");
+  document.getElementById("subTitle").textContent = `${CFG.school} · ${CFG.term} · 当前：第${S.pointer}周 ${S.pointer%2===1?"单":"双"}周 · 7:00起 / 0:00睡 · 健身 周一·二·五·六·日 19:30-21:00`;
+}
+function jumpWeek(v){ S.pointer = parseInt(v); save(); renderSel(); renderWeek(); }
+function refreshWeek(){
+  const old = S.pointer;
+  const tw = todayWeek();
+  const next = Math.max(old+1, tw);
+  if(next>18){ toast("已是第18周（学期最后一周），不再前进"); return; }
+  if(!confirm(`将把第 ${old} 周的勾选数据归档（可在周报告查看），并切换到第 ${next} 周。\n日期、单双周、节假日会自动对应。继续？`)) return;
+  // archive
+  const prefix = "w"+old+"-";
+  const snap = {};
+  Object.keys(S.status).forEach(k=>{ if(k.startsWith(prefix)) snap[k]=S.status[k]; });
+  S.archive[old] = {status:snap, savedAt:dkey(new Date()), todos:S.todos.filter(t=>t.week===old)};
+  // clear current week data
+  Object.keys(S.status).forEach(k=>{ if(k.startsWith(prefix)) delete S.status[k]; });
+  S.pointer = next;
+  save(); renderSel(); renderWeek();
+  toast("✅ 第"+old+"周已归档，现在是第"+next+"周（"+(next%2===1?"单":"双")+"周）");
+  if("Notification" in window && Notification.permission==="granted"){ try{ new Notification("新的一周开始啦",{body:"第"+next+"周 · "+(next%2===1?"单":"双")+"周 · 日期已自动对应"}); }catch(e){} }
+}
+
+/* ---------- stats ---------- */
+function collect(weekNo, statusObj){
+  const w = weekNo ?? S.pointer; const st = statusObj ?? S.status;
+  const days=[]; let doneN=0, missN=0, pendN=0; const cat={};
+  const mon = weekMonday(w);
+  for(let di=0;di<7;di++){
+    const d=new Date(mon); d.setDate(d.getDate()+di);
+    const day = buildDay(w,d);
+    let dn=0,total=0; const missed=[];
+    day.blocks.forEach((b,bi)=>{
+      const k="w"+w+"-"+di+"-"+bi; const v=st[k];
+      if(!v){ pendN++; return; }
+      total++; if(v==="done"){ dn++; doneN++;
+        const h=(parseInt(b.t2.replace(":",""))-parseInt(b.t1.replace(":","")))/100;
+        cat[b.cat]=(cat[b.cat]||0)+Math.abs(h);
+      } else { missN++; missed.push(b.txt); }
+    });
+    days.push({label:day.label, dn, total:day.blocks.length, missed, holiday:!!day.holiday});
+  }
+  return {w, days, doneN, missN, pendN, cat};
+}
+function renderStats(){
+  const c = collect();
+  const total = c.doneN+c.missN+c.pendN;
+  const pct = total? Math.round(c.doneN/total*100):0;
+  document.getElementById("statBox").innerHTML =
+    `<div class="s"><div class="v">${pct}%</div><div class="k">本周完成率</div></div>
+     <div class="s"><div class="v" style="color:#34d399">${c.doneN}</div><div class="k">已完成 ✅</div></div>
+     <div class="s"><div class="v" style="color:#f87171">${c.missN}</div><div class="k">未做到 ❌</div></div>
+     <div class="s"><div class="v" style="color:#94a3b8">${c.pendN}</div><div class="k">未勾选</div></div>`;
+  document.getElementById("progBar").style.width = pct+"%";
+  document.getElementById("dayStats").innerHTML = `<table class="tbl"><tr><th>日期</th><th>完成</th><th>未做到的</th></tr>`+
+    c.days.map(d=>`<tr><td>${d.label}${d.holiday?' 🎉':''}</td><td><b style="color:#34d399">${d.dn}/${d.total}</b></td><td style="color:#f87171;font-size:12px">${d.missed.slice(0,3).join("；")||"—"}</td></tr>`).join("")+`</table>`;
+  // analysis
+  const sug=[];
+  if(total===0) sug.push("本周还没开始勾选——每完成一项就点 ✔，周日晚自动出报告。");
+  else{
+    if(pct>=85) sug.push(`完成率 <b>${pct}%</b>，非常稳！保持节奏，注意睡眠别熬夜超过0:30。`);
+    else if(pct>=60) sug.push(`完成率 <b>${pct}%</b>，中上水平。看看未勾选项里哪些是「学习」类——优先保听力/阅读两大分值模块。`);
+    else sug.push(`完成率 <b>${pct}%</b> 偏低。建议每天只锁定 3 个必做：早听力磨耳朵、晚间学习块、健身——先把骨架稳住再加量。`);
+    const worst = c.days.filter(d=>!d.holiday).sort((a,b)=>a.dn/a.total-b.dn/b.total)[0];
+    if(worst && worst.dn/Math.max(1,worst.total)<0.5) sug.push(`完成率最低的一天是 <b>${worst.label}</b>（${worst.dn}/${worst.total}）——检查那天是否有课太多/太累，把学习块挪到轻日子。`);
+    const missStudy = c.days.reduce((a,d)=>a+d.missed.filter(m=>/四级|学习|复习/.test(m)).length,0);
+    if(missStudy>3) sug.push(`学习类任务缺勤 <b>${missStudy}</b> 次——四级主要靠日积月累，宁可每天30min也别断。`);
+    const missGym = c.days.reduce((a,d)=>a+d.missed.filter(m=>/健身/.test(m)).length,0);
+    if(missGym>=2) sug.push(`健身缺了 <b>${missGym}</b> 次——健身服前一晚放床头，降低出门摩擦。`);
+  }
+  document.getElementById("analysisBox").innerHTML = sug.map(s=>`<li>${s}</li>`).join("");
+  // archive
+  const arch = Object.keys(S.archive).map(Number).sort((a,b)=>a-b);
+  document.getElementById("archiveBox").innerHTML = arch.length?
+    `<table class="tbl"><tr><th>周次</th><th>完成率</th><th>✅</th><th>❌</th><th>归档日</th></tr>`+
+    arch.map(w=>{ const st=S.archive[w].status; const vals=Object.values(st);
+      const done=vals.filter(v=>v==="done").length, miss=vals.filter(v=>v==="miss").length;
+      const pct=vals.length?Math.round(done/vals.length*100):0;
+      return `<tr><td><b>第${w}周</b>（${w%2===1?"单":"双"}）</td><td><b style="color:${pct>=70?'#34d399':'#fbbf24'}">${pct}%</b></td><td>${done}</td><td>${miss}</td><td>${S.archive[w].savedAt}</td></tr>`;}).join("")+`</table>`
+    : `<div style="font-size:12.5px;color:var(--muted)">暂无归档——每周日晚点「🔄 刷新·开始新的一周」后，本周数据会存到这里。</div>`;
+}
+
+/* ---------- todos ---------- */
+function renderTodos(){
+  const w = S.pointer;
+  const list = S.todos.filter(t=>t.week===w);
+  document.getElementById("todoEditor").innerHTML = list.length? list.map((t)=>{
+    const i = S.todos.indexOf(t);
+    return `<div class="todo-row">
+      <input class="f d" value="${(t.date||"").replace(/"/g,"&quot;")}" placeholder="日期 如 10/8" onchange="upTodo(${i},'date',this.value)">
+      <input class="f t" value="${(t.text||"").replace(/"/g,"&quot;")}" placeholder="任务内容（自己写）" onchange="upTodo(${i},'text',this.value)">
+      <input class="f n" value="${(t.note||"").replace(/"/g,"&quot;")}" placeholder="备注" onchange="upTodo(${i},'note',this.value)">
+      <input type="checkbox" class="ck" ${t.done?"checked":""} onchange="upTodo(${i},'done',this.checked)">
+      <button class="op" title="加提醒" onclick="todoRemind(${i})">⏰</button>
+      <button class="op" title="删除" onclick="delTodo(${i})">🗑</button></div>`;
+  }).join("") : `<div style="font-size:12.5px;color:var(--muted);padding:8px 0">本周还没有任务，点下方添加。</div>`;
+}
+function addTodo(){ S.todos.push({week:S.pointer,date:"",text:"",note:"",done:false}); save(); renderTodos();
+  const inp=document.querySelectorAll("#todoEditor .todo-row:last-child input"); if(inp[1]) inp[1].focus(); }
+function upTodo(i,k,v){ S.todos[i][k]=v; save(); if(k==="done") renderTodos(); }
+function delTodo(i){ S.todos.splice(i,1); save(); renderTodos(); }
+function todoRemind(i){ const t=S.todos[i];
+  const dv = prompt("提醒日期（格式 2026-10-08）：", t.date? "2026-"+String(S.pointer<=9?"0":"")+"" : "");
+  if(dv===null) return; const tv = prompt("提醒时间（格式 21:00）：","21:00"); if(tv===null) return;
+  S.customRem.push({date:dv, time:tv, text:"任务："+(t.text||"未命名")}); save(); toast("⏰ 已加入提醒 "+dv+" "+tv); }
+
+/* ---------- feedback ---------- */
+function genFeedback(){
+  const c = collect();
+  const total = c.doneN+c.missN+c.pendN;
+  const pct = total? Math.round(c.doneN/total*100):0;
+  const todoOk = S.todos.filter(t=>t.week===c.w&&t.done).length;
+  const todoAll = S.todos.filter(t=>t.week===c.w).length;
+  const lines = [];
+  lines.push(`【每周反馈 · 第${c.w}周（${c.w%2===1?"单":"双"}周）· 刘心洋四级计划】`);
+  lines.push(`① 总完成率：${pct}%（完成 ${c.doneN} / 打叉 ${c.missN} / 未勾 ${c.pendN}）`);
+  lines.push(`② 各日：` + c.days.map(d=>`${d.label} ${d.dn}/${d.total}`).join("，"));
+  lines.push(`③ 分类投入（已完成小时）：` + Object.entries(c.cat).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${(CAT[k]||{n:k}).n} ${v.toFixed(1)}h`).join("，"));
+  lines.push(`④ 每周任务完成：${todoOk}/${todoAll}`);
+  const missed = c.days.flatMap(d=>d.missed.map(m=>`${d.label}：${m}`));
+  if(missed.length) lines.push(`⑤ 未做到的：` + missed.join("；"));
+  const arch = Object.keys(S.archive).map(Number).sort((a,b)=>a-b);
+  if(arch.length) lines.push(`⑥ 历史周完成率：` + arch.map(w=>{const v=Object.values(S.archive[w].status); const d=v.filter(x=>x==="done").length; return `第${w}周 ${v.length?Math.round(d/v.length*100):0}%`;}).join("，"));
+  lines.push(`⑦ 我对下周的要求/调整：（写下新要求，如调整健身时间、某天有事、学习侧重点…）`);
+  document.getElementById("fbText").value = lines.join("\n");
+  toast("已生成，记得复制给 WorkBuddy");
+}
+function copyFeedback(){ const ta=document.getElementById("fbText"); ta.select(); navigator.clipboard? navigator.clipboard.writeText(ta.value).then(()=>toast("📋 已复制")).catch(()=>document.execCommand("copy")) : document.execCommand("copy"); }
+
+/* ---------- reminders ---------- */
+function renderRem(){
+  let h = `<table class="tbl"><tr><th style="width:150px">时间</th><th>提醒内容</th><th style="width:60px">启用</th></tr>`;
+  CFG.reminders.forEach(r=>{
+    const on = S.rem[r.id]!==false;
+    h += `<tr><td><b style="color:#93c5fd">${r.when}</b></td><td>${r.text}</td>
+      <td style="text-align:center"><input type="checkbox" class="ck" ${on?"checked":""} onchange="S.rem['${r.id}']=this.checked;save()"></td></tr>`;
+  });
+  h += `</table><div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.8">页面通知需保持网页开着；手机请用「导出到手机日历」。每周任务的自定义提醒也在 .ics 里。</div>`;
+  document.getElementById("remBox").innerHTML = h;
+}
+function enableNotif(){ if(!("Notification" in window)){ toast("此浏览器不支持通知"); return; }
+  Notification.requestPermission().then(p=>{ document.getElementById("notifState").textContent = p==="granted"?"✅ 通知已开启":"❌ 未授权"; if(p==="granted") toast("🔔 通知已开启"); }); }
+function checkReminders(){
+  const now = new Date();
+  const hm = String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+  const dk = dkey(now);
+  const dow = now.getDay();
+  CFG.reminders.forEach(r=>{
+    if(S.rem[r.id]===false) return;
+    if(r.days && !r.days.includes(dow)) return;
+    if(!r.times.includes(hm)) return;
+    const fk = dk+"-"+r.id+"-"+hm;
+    if(S.fired[fk]) return;
+    S.fired[fk]=true; save();
+    toast("⏰ "+r.text);
+    if("Notification" in window && Notification.permission==="granted"){ try{ new Notification("计划提醒",{body:r.text}); }catch(e){} }
+  });
+  S.customRem.forEach((r,i)=>{
+    if(r.date!==dk || r.time!==hm) return;
+    const fk = dk+"-cr"+i;
+    if(S.fired[fk]) return; S.fired[fk]=true; save();
+    toast("⏰ "+r.text);
+    if("Notification" in window && Notification.permission==="granted"){ try{ new Notification("任务提醒",{body:r.text}); }catch(e){} }
+  });
+}
+/* ics export: gym/study/review for next 56 days + exam */
+function exportICS(){
+  const pad=n=>String(n).padStart(2,"0");
+  const dt=(d,hm)=>d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+"T"+hm.replace(":","")+"00";
+  let ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//CET4Plan//CN","CALSCALE:GREGORIAN"];
+  const addEv=(d,time,title,mins)=>{ ics.push("BEGIN:VEVENT","UID:"+dt(d,time)+"-"+title.length+"@cet4","DTSTAMP:"+dt(new Date(),"0000"),"DTSTART:"+dt(d,time),"SUMMARY:"+title,"BEGIN:VALARM","TRIGGER:-PT15M","ACTION:DISPLAY","DESCRIPTION:"+title,"END:VALARM","END:VEVENT"); };
+  const start = new Date(); start.setHours(0,0,0,0);
+  for(let i=0;i<56;i++){
+    const d = new Date(start); d.setDate(d.getDate()+i);
+    const w = todayWeek(); // approx
+    const dow = d.getDay();
+    const dk2 = dkey(d);
+    if(dk2===CFG.cet4Date){ addEv(d,"08:00","🎯 四级考试日！检查准考证/身份证/耳机",30); addEv(d,"08:30","出发去考场",15); continue; }
+    if(CFG.holidays[dk2]) continue;
+    if(dow===1||dow===2||dow===5) addEv(d,"19:30","🏋️ 健身 19:30-21:00",90);
+    if(dow===6||dow===0) addEv(d,"19:30","🏋️ 健身 19:30-21:00",90);
+    if(dow===0) addEv(d,"21:00","📊 周复盘：勾选+生成反馈+点刷新开新周",30);
+  }
+  S.customRem.forEach(r=>{ const d=new Date(r.date+"T00:00"); if(!isNaN(d)) addEv(d,r.time,"⏰ "+r.text,30); });
+  ics.push("END:VCALENDAR");
+  const blob = new Blob([ics.join("\r\n")],{type:"text/calendar"});
+  const a = document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="刘心洋四级计划提醒.ics"; a.click();
+  toast("📲 已下载 .ics，手机打开即可加入系统日历");
+}
+
+/* ---------- resources ---------- */
+function renderRes(){
+  document.getElementById("resBox").innerHTML = CFG.resources.map(r=>
+    `<div class="card"><b style="color:#93c5fd">${r[0]}</b> · <a href="${r[2]}" target="_blank" style="color:var(--accent2);font-size:13.5px">${r[1]}</a></div>`).join("");
+}
+
+/* ---------- data ---------- */
+function exportData(){ const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,2)],{type:"application/json"}));
+  a.download="刘心洋四级计划备份.json"; a.click(); toast("📤 已导出备份"); }
+function importData(){ const i=document.createElement("input"); i.type="file"; i.accept=".json";
+  i.onchange=()=>{ const f=new FileReader(); f.onload=()=>{ try{ S=JSON.parse(f.result); save(); renderAll(); toast("📥 导入成功"); }catch(e){ toast("文件格式错误"); } }; f.readAsText(i.files[0]); }; i.click(); }
+function clearWeek(){ if(!confirm("清空本周全部勾选？")) return; Object.keys(S.status).forEach(k=>{ if(k.startsWith("w"+S.pointer+"-")) delete S.status[k]; }); save(); renderWeek(); toast("已清空本周勾选"); }
+function resetData(){ if(confirm("确定清空全部记录（勾选/任务/归档）？建议先导出备份")){ S=fresh(); save(); renderAll(); } }
+function toast(msg){ const t=document.createElement("div"); t.className="toast"; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3200); }
+
+/* ---------- tabs ---------- */
+function showTab(p,el){ document.querySelectorAll(".pane").forEach(x=>x.classList.remove("on"));
+  document.getElementById("pane-"+p).classList.add("on");
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on")); el.classList.add("on"); }
+function renderAll(){ renderSel(); renderWeek(); renderRem(); renderRes(); }
+renderAll();
+setInterval(checkReminders, 30000);
+document.getElementById("foot").innerHTML =
+  `第1周=2026/9/14起 · 国庆所在周为第3周 · 单双周按周次自动判断 · 法定节假日（国庆10/1-7、元旦1/1-3）自动休息<br>每周日晚：勾选完成 → 生成反馈复制给 WorkBuddy → 点「🔄 刷新」开新一周（数据归档、日期自动对应）。数据保存在本设备浏览器。`;
+</script>
+</body>
+</html>
