@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- v3 · 2026-10-06 节次时间已按校作息时间表校对：1-2节08:35-09:55 / 3-4节10:10-11:30 / 5-6节12:35-13:55 / 7-8节14:10-15:30 / 9-10节15:45-17:05 / 11-12节18:15-19:35 -->
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -36,6 +35,8 @@ select{background:#1c2a4d;color:var(--text);border:1px solid var(--line);border-
 .day{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .day.holiday{border-color:#7c2d12;background:linear-gradient(160deg,#1f1505,#191307)}
 .day.examday{border-color:#9f1239;background:linear-gradient(160deg,#1f0a14,#170a11)}
+.day.today{border-color:#2563eb;box-shadow:0 0 0 1px #2563eb,0 0 18px rgba(37,99,235,.35)}
+.day.today .dhead{background:#16263f}
 .dhead{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:#1a2440;border-bottom:1px solid var(--line)}
 .dhead .dname{font-weight:800;font-size:14.5px}
 .dhead .ddate{font-size:11.5px;color:var(--muted)}
@@ -58,7 +59,18 @@ textarea{width:100%;min-height:220px;background:#0d1830;border:1px solid var(--l
 .todo-row{display:flex;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .todo-row input.f{background:#0d1830;border:1px solid var(--line);border-radius:8px;color:var(--text);padding:8px 10px;font-size:13.5px}
 .todo-row .d{width:86px}.todo-row .t{flex:1;min-width:180px}.todo-row .n{flex:1;min-width:140px}
-.op{background:none;border:none;cursor:pointer;font-size:15px;padding:4px}
+.op{background:none;border:none;cursor:pointer;font-size:15px;padding:4px;color:#4b608a}
+.opx{background:#0d1830;border:2px solid #2c3a57;border-radius:10px;cursor:pointer;
+     min-width:46px;min-height:46px;font-size:24px;line-height:1;flex:0 0 auto;
+     display:inline-flex;align-items:center;justify-content:center;
+     transition:transform .08s ease, background .15s ease, border-color .15s ease}
+.opx:active{transform:scale(1.12)}
+.opx.ok{color:#5b739f}
+.opx.ok.on{background:#0f766e;border-color:#34d399;color:#fff;box-shadow:0 0 12px rgba(52,211,153,.45)}
+.opx.no{color:#5b739f}
+.opx.no.on{background:#7f1d1d;border-color:#f87171;color:#fff;box-shadow:0 0 12px rgba(248,113,113,.45)}
+.blk .btxt.done-txt{opacity:.55;text-decoration:line-through}
+.blk .btxt.miss-txt{color:#c98a8a}
 .chip{display:inline-block;background:#12233b;color:#93c5fd;border-radius:99px;padding:3px 11px;font-size:11.5px;margin:2px 4px 2px 0}
 .progress{height:8px;background:#0d1830;border-radius:99px;overflow:hidden;margin:6px 0 12px}
 .progress i{display:block;height:100%;background:linear-gradient(90deg,#2563eb,#34d399);border-radius:99px}
@@ -166,6 +178,7 @@ footer{margin-top:26px;font-size:11.5px;color:var(--muted);text-align:center;lin
 const CFG = {"student": "刘心洋", "school": "上海中侨职业技术大学", "term": "2026-2027学年第一学期（26视觉本科2）", "cet4Date": "2026-12-12", "startPointer": 2, "periods": {"1-2": ["08:35", "09:55"], "3-4": ["10:10", "11:30"], "5-6": ["12:35", "13:55"], "7-8": ["14:10", "15:30"], "9-10": ["15:45", "17:05"], "11-12": ["18:15", "19:35"]}, "courses": [{"name": "心理健康教育", "day": 1, "period": "1-2", "wk": [3, 18], "room": "42-211", "teacher": "陈巧英"}, {"name": "职业生涯规划与就业指导", "day": 1, "period": "3-4", "wk": [4, 18], "parity": "even", "room": "42-212", "teacher": "李枝霖"}, {"name": "习近平新时代中国特色社会主义思想概论", "day": 1, "period": "9-10", "wk": [3, 18], "room": "10-405", "teacher": "工农"}, {"name": "习近平新时代中国特色社会主义思想概论", "day": 2, "period": "1-2", "wk": [3, 17], "parity": "odd", "room": "42-516", "teacher": "工农"}, {"name": "思想道德与法治", "day": 2, "period": "1-2", "wk": [4, 18], "parity": "even", "room": "10-501", "teacher": "李英平"}, {"name": "形势与政策", "day": 2, "period": "3-4", "wk": [5, 8], "room": "42-316", "teacher": "李英平"}, {"name": "数字图像技术", "day": 2, "period": "5-6", "wk": [3, 18], "room": "35-322", "teacher": "梁文静"}, {"name": "大学英语1", "day": 2, "period": "7-8", "wk": [3, 18], "room": "10-503", "teacher": "叶怡"}, {"name": "思想道德与法治", "day": 3, "period": "1-2", "wk": [3, 18], "room": "10-501", "teacher": "李英平"}, {"name": "大学英语1", "day": 3, "period": "3-4", "wk": [3, 18], "room": "10-503", "teacher": "叶怡"}, {"name": "视觉设计基础", "day": 3, "period": "9-10", "wk": [3, 18], "room": "5-406", "teacher": "戎晟"}, {"name": "视觉设计基础", "day": 3, "period": "11-12", "wk": [3, 18], "room": "5-408", "teacher": "贺晓舟"}, {"name": "体育与健康（游泳）", "day": 4, "period": "3-4", "wk": [1, 16], "room": "游泳馆3", "teacher": "骆兵"}, {"name": "大学信息技术", "day": 5, "period": "3-4", "wk": [4, 18], "parity": "even", "room": "35-303", "teacher": "时艺玮"}, {"name": "大学信息技术（连上4节·含上机）", "day": 5, "period": "3-6", "wk": [3, 17], "parity": "odd", "room": "35-303", "teacher": "时艺玮"}], "holidays": {"2026-10-01": "国庆节", "2026-10-02": "国庆节", "2026-10-03": "国庆节", "2026-10-04": "国庆节", "2026-10-05": "国庆节", "2026-10-06": "国庆节", "2026-10-07": "国庆节", "2027-01-01": "元旦", "2027-01-02": "元旦", "2027-01-03": "元旦"}, "weekNotes": {"2": "国庆周（本学期第2周，9/28-10/4）：本周课程尚未开始（多数课程第3周开课），10/1-4 法定节假日休息。", "3": "10/5-7 假期延续，10/8（周四）恢复上课。10/10（周六）若学校安排调休补课，以通知为准。课程本周全面开始。", "8": "形势与政策最后一周（第5-8周）。11/9-11/15。", "12": "🎯 四级考试周！考试预计 12/12（周六）9:00-11:20，以准考证为准。本周减量复习、调整状态。", "15": "期末复习周。12/28-1/3，其中 1/1-3 元旦放假。", "17": "校外实习1：认识实习（李勇带队，共2周，1/11-1/17）。晚上英语轻量保持。", "18": "校外实习最后一周（1/18-1/24）。学期结束。"}, "resources": [["四级真题", "历年四级真题PDF（华研/星火），网站每周日上午全真模拟用", "https://www.exam8.com/english/CET4/"], ["单词", "百词斩/墨墨背单词（每天碎片+晚间的固定单词块）", "https://www.baicizhan.com"], ["单词", "不背单词（真题词频模式，适合冲刺）", "https://www.bbdc.cn"], ["听力", "每日英语听力（真题听力+泛听，晨读磨耳朵首选）", "https://dict.eudic.net/ting"], ["听力", "TED（泛听+跟读，周末轻松学用）", "https://www.ted.com"], ["阅读", "China Daily / BBC News（课外泛读，积累翻译素材）", "https://www.chinadaily.com.cn"], ["写作翻译", "扇贝四六级写作模板 + 范文精读", "https://www.shanbay.com"], ["综合", "中国教育考试网·四六级报名与成绩（官方）", "https://cet.neea.edu.cn"]], "reminders": [{"id": "gym", "when": "周一/二/五/六/日 19:30", "text": "🏋️ 健身出发（19:30-21:00，周三周四休息）", "days": [1, 2, 5, 6, 0], "times": ["19:30"]}, {"id": "study", "when": "每天 21:00", "text": "📚 晚间学习块开始（21:00-23:00）", "days": null, "times": ["21:00"]}, {"id": "review", "when": "周日 21:00", "text": "📊 周复盘：勾选✓/✗→生成反馈→点刷新开新一周", "days": [0], "times": ["21:00"]}, {"id": "exam", "when": "12/11 21:00", "text": "🎯 明天四级考试！检查准考证·身份证·耳机·文具，早睡", "days": null, "times": []}]};
 /* ---------- state ---------- */
 const LSKEY = "liuxinyang_cet4_plan_v2";
+let AUTO_SCROLLED = false;   /* 打开页面时自动滚动到今天（只滚一次） */
 let S = load();
 function load(){ try{ return JSON.parse(localStorage.getItem(LSKEY)) || fresh(); }catch(e){ return fresh(); } }
 function fresh(){ return {pointer: CFG.startPointer, status:{}, todos:[], rem:{}, fired:{}, archive:{}, customRem:[]}; }
@@ -175,13 +188,16 @@ S.status = S.status||{}; S.todos = S.todos||[]; S.rem = S.rem||{}; S.fired = S.f
 /* ---------- week/date helpers ---------- */
 const SEM_MON = new Date(2026,8,21); // 第1周周一 = 2026-09-21（国庆后10/5那周=第3周，国庆周9/28-10/4=第2周）
 function weekMonday(w){ const d=new Date(SEM_MON); d.setDate(d.getDate()+(w-1)*7); return d; }
-function todayWeek(){ const t=new Date(); t.setHours(0,0,0,0); const diff=Math.round((t-SEM_MON)/(7*864e5)); return diff<0?1:Math.min(18,Math.floor(diff/7)+1); }
+function todayWeek(){ const t=new Date(); t.setHours(0,0,0,0); const diff=Math.round((t-SEM_MON)/(7*864e5)); return diff<0?1:Math.min(18, diff+1); }
 function dkey(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function isHoliday(d){ return CFG.holidays[dkey(d)] || null; }
 function wd(d){ return ["日","一","二","三","四","五","六"][d.getDay()]; }
 function coursesFor(w, day){ return CFG.courses.filter(c=>c.day===day && w>=c.wk[0] && w<=c.wk[1] && (!c.parity || (c.parity==="odd"? w%2===1 : w%2===0))); }
 function phase(w){ if(w<=11) return "cet4"; if(w===12) return "examweek"; if(w<=16) return "final"; return "intern"; }
 const PHASE_NAME = {cet4:"四级冲刺期", examweek:"四级考试周！", final:"考后·期末复习期", intern:"校外实习期"};
+
+/* 打开时若落后于当前周，自动跳到本周（勾选数据按周号保存，不会丢失；归档仍用「刷新」按钮） */
+(function(){ const tw = todayWeek(); if(S.pointer < tw){ S.pointer = tw; save(); } })();
 
 /* study label by phase */
 function sl(w, txt){ const p=phase(w); if(p==="cet4"||p==="examweek") return "四级·"+txt; if(p==="final") return "英语保持+期末复习"; return "自由·"+txt; }
@@ -342,7 +358,7 @@ function renderWeek(){
   const w = S.pointer;
   const mon = weekMonday(w);
   const days = [];
-  for(let i=0;i<7;i++){ const d=new Date(mon); d.setDate(d.getDate()+i); days.push(buildDay(w,d)); }
+  for(let i=0;i<7;i++){ const d=new Date(mon); d.setDate(d.getDate()+i); const dy=buildDay(w,d); dy.dk=dkey(d); days.push(dy); }
   WEEK = {w, mon, days};
   // week meta
   const sun = new Date(mon); sun.setDate(sun.getDate()+6);
@@ -364,23 +380,32 @@ function renderWeek(){
     (cs.length?`<br>📚 本周有课：${cs.join("；")}`:"<br>📚 本周无课")+
     (note?`<br>📌 ${note}`:"");
   // days
+  const todayKey = dkey(new Date());
   const box = document.getElementById("daysBox");
   box.innerHTML = days.map((day,di)=>{
-    const cls = day.holiday?"holiday":(day.examday?"examday":"");
+    const cls = (day.dk===todayKey?"today ":"")+(day.holiday?"holiday":(day.examday?"examday":""));
     const tag = day.holiday?`<span style="font-size:11px;color:#fdba74">🎉 ${day.holiday}·休息</span>`:(day.examday?`<span style="font-size:11px;color:#f472b6">🎯 四级考试日</span>`:"");
     const rows = day.blocks.map((b,bi)=>{
       const k = "w"+w+"-"+di+"-"+bi;
       const st = S.status[k];
-      const mark = st==="done"?"✅":(st==="miss"?"❌":"");
+      const tcls = st==='done'?' done-txt':(st==='miss'?' miss-txt':'');
       return `<div class="blk"><span class="btime">${b.t1}<br>${b.t2}</span>
-        <span class="btxt">${b.txt}${b.lunchNote?`<br><i style="color:#fbbf24;font-size:11px">${b.lunchNote}</i>`:""}</span>
+        <span class="btxt${tcls}">${b.txt}${b.lunchNote?`<br><i style="color:#fbbf24;font-size:11px">${b.lunchNote}</i>`:""}</span>
         ${catTag(b.cat)}
-        <button class="op" title="完成" onclick="mark('${k}','done')" style="color:${st==='done'?'#34d399':'#4b608a'}">✔</button>
-        <button class="op" title="没做到" onclick="mark('${k}','miss')" style="color:${st==='miss'?'#f87171':'#4b608a'}">✘</button></div>`;
+        <button class="opx ok${st==='done'?' on':''}" title="完成" aria-label="完成" onclick="mark('${k}','done')">✔</button>
+        <button class="opx no${st==='miss'?' on':''}" title="没做到" aria-label="没做到" onclick="mark('${k}','miss')">✘</button></div>`;
     }).join("");
-    return `<div class="day ${cls}"><div class="dhead"><span class="dname">${day.label}</span><span class="ddate">${tag}</span></div>${rows}</div>`;
+    const dstat = {d:0,m:0};
+    day.blocks.forEach((b,bi)=>{ const st=S.status["w"+w+"-"+di+"-"+bi]; if(st==='done')dstat.d++; else if(st==='miss')dstat.m++; });
+    const dpct = day.blocks.length? Math.round(dstat.d/day.blocks.length*100):0;
+    const dtag = day.blocks.length? `<span style="font-size:12px;color:${dpct===100?'#34d399':(dpct>=60?'#fbbf24':'#8fa3c8')}">✔${dstat.d} ✘${dstat.m} · ${dpct}%</span>`:"";
+    return `<div class="day ${cls}" id="day-${di}"><div class="dhead"><span class="dname">${day.label}</span><span class="ddate">${dtag||tag}</span></div>${rows}</div>`;
   }).join("");
   renderStats(); renderTodos();
+  if(!AUTO_SCROLLED && w===todayWeek()){
+    setTimeout(()=>{ const t=document.querySelector('.day.today'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); }, 250);
+    AUTO_SCROLLED = true;
+  }
 }
 function mark(k,v){ S.status[k] = S.status[k]===v? "":v; save(); renderWeek(); }
 
@@ -616,7 +641,7 @@ function renderAll(){ renderSel(); renderWeek(); renderRem(); renderRes(); }
 renderAll();
 setInterval(checkReminders, 30000);
 document.getElementById("foot").innerHTML =
-  `第1周=2026/9/14起 · 国庆所在周为第3周 · 单双周按周次自动判断 · 法定节假日（国庆10/1-7、元旦1/1-3）自动休息<br>每周日晚：勾选完成 → 生成反馈复制给 WorkBuddy → 点「🔄 刷新」开新一周（数据归档、日期自动对应）。数据保存在本设备浏览器。`;
+  `第1周=2026/9/21起 · 国庆周（9/28-10/4）为第2周 · 国庆后10/5那周为第3周 · 单双周按周次自动判断 · 法定节假日（国庆10/1-7、元旦1/1-3）自动休息<br>每次打开自动跳到本周并定位到今天。每周日晚：勾选完成 → 生成反馈复制给 WorkBuddy → 点「🔄 刷新」开新一周（数据归档、日期自动对应）。数据保存在本设备浏览器。`;
 </script>
 </body>
 </html>
